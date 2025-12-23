@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的动态 - 高中回忆录</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo"><a href="index.html">High School Memoir</a></div>
+        <div class="nav-links" id="nav-auth">
+            <!-- Populated by JS -->
+            <a href="index.html" class="nav-item">首页</a>
+            <a href="login.html" class="nav-item">登录</a>
+            <a href="register.html" class="btn btn-primary">注册</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <main style="width: 100%;">
+            <h2 style="margin-bottom: 20px;">我的动态</h2>
+            <div class="card">
+                <div id="notifications-list">
+                    <p style="color:#888;">加载中...</p>
+                </div>
+                
+                <!-- Pagination -->
+                <div id="notifications-pagination" style="margin-top: 20px; text-align: center;">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Load notifications when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            checkSession().then(() => {
+                if (currentUser) {
+                    loadNotificationsList(1); // Load first page
+                } else {
+                    window.location.href = 'login.html';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>所有公告 - 高中回忆录</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo"><a href="index.html">High School Memoir</a></div>
+        <div class="nav-links" id="nav-auth">
+            <!-- Populated by JS -->
+            <a href="index.html" class="nav-item">首页</a>
+            <a href="login.html" class="nav-item">登录</a>
+            <a href="register.html" class="btn btn-primary">注册</a>
+        </div>
+    </nav>
+
+    <div class="container home-layout">
+        <!-- Main Content -->
+        <main style="grid-column: 1 / -1;">
+            <div class="card">
+                <div class="sidebar-title">所有公告</div>
+                <div id="all-announcements-list">
+                    <div style="padding:10px; color:#888;">加载中...</div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            loadAllAnnouncements();
+        });
+
+        async function loadAllAnnouncements() {
+            const list = document.getElementById('all-announcements-list');
+            try {
+                const res = await fetch('api/announcements.php?action=get_all');
+                const data = await res.json();
+                
+                if (data.success) {
+                    list.innerHTML = '';
+                    if (data.announcements.length === 0) {
+                         list.innerHTML = '<div style="padding:10px; color:#888;">暂无公告</div>';
+                         return;
+                    }
+                    data.announcements.forEach(a => {
+                        const div = document.createElement('div');
+                        div.style.marginBottom = '20px';
+                        div.style.paddingBottom = '20px';
+                        div.style.borderBottom = '1px solid #f0f0f0';
+                        div.innerHTML = `
+                            <div style="font-size: 1.1rem; white-space: pre-wrap; margin-bottom: 10px;">${a.content}</div>
+                            <div style="font-size: 0.9rem; color: #888;">发布于 ${new Date(a.created_at).toLocaleString()}</div>
+                        `;
+                        list.appendChild(div);
+                    });
+                } else {
+                     list.innerHTML = `<div style="padding:10px; color:red;">加载失败</div>`;
+                }
+            } catch (e) {
+                console.error("Load announcements failed", e);
+                list.innerHTML = '<div style="padding:10px; color:red;">加载错误</div>';
+            }
+        }
+    </script>
+</body>
+</html>

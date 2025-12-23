@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高中回忆录</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">High School Memoir</div>
+        <div class="search-bar" onclick="window.location.href='search.html'" style="cursor: pointer;">
+            <span>🔍</span>
+            <input type="text" placeholder="点击搜索回忆..." readonly style="cursor: pointer;">
+        </div>
+        <div class="nav-links" id="nav-auth">
+            <!-- Populated by JS -->
+            <a href="index.html" class="nav-item">首页</a>
+            <a href="login.html" class="nav-item">登录</a>
+            <a href="register.html" class="btn btn-primary">注册</a>
+        </div>
+    </nav>
+
+    <div class="container home-layout">
+        <!-- Left Sidebar: Announcements -->
+        <aside class="sidebar">
+            <div class="card">
+                <!-- Add trigger button here -->
+                <button class="btn btn-primary" style="width: 100%; margin-bottom: 20px; font-size: 1.1rem; padding: 12px;" onclick="openPostModal()">+ 发布回忆</button>
+                
+                <div class="sidebar-title" style="display: flex; justify-content: space-between; align-items: center;">
+                    <span>📢 公告栏</span>
+                    <a href="announcements.html" style="font-size: 0.8rem; font-weight: normal; color: #666;">查看更多</a>
+                </div>
+                <div id="announcement-list">
+                    <div style="padding:10px; color:#888;">加载中...</div>
+                </div>
+            </div>
+
+            <!-- Topic Ranking -->
+            <div class="card">
+                <div class="sidebar-title">📈 话题榜</div>
+                <div id="topic-ranking-list">
+                    <div style="padding:10px; color:#888;">加载中...</div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            <!-- Feed -->
+            <div id="memoir-feed">
+                <!-- Populated by JS -->
+            </div>
+            
+            <!-- Pagination -->
+            <div id="pagination" class="pagination"></div>
+        </main>
+    </div>
+
+    <!-- Create Post Modal -->
+    <div class="modal-overlay" id="post-modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closePostModal()">&times;</span>
+            <div class="sidebar-title">发布回忆</div>
+            <form id="post-form">
+                <textarea name="content" placeholder="分享你的高中回忆..."></textarea>
+                
+                <div id="image-preview-container">
+                    <!-- Images will be inserted here -->
+                    <div class="upload-trigger" onclick="document.getElementById('post-images').click()">+</div>
+                </div>
+
+                <div class="create-actions">
+                    <div style="display: flex; gap: 10px; align-items: center; flex: 1;">
+                        <input type="file" name="images[]" id="post-images" multiple accept="image/*" style="display: none;" onchange="handleImageSelection(this)">
+                        
+                        <input type="text" name="topic_name" id="topic-input" placeholder="输入话题 (例如: 运动会)" list="topic-suggestions" style="padding: 10px 15px; border-radius: 20px; border: 1px solid #ddd; outline: none; width: 100%; max-width: 200px; background: #f8f9fa;">
+                        <datalist id="topic-suggestions">
+                            <!-- Populated by JS -->
+                        </datalist>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="padding: 8px 25px;">发布</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
